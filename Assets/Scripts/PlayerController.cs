@@ -7,18 +7,22 @@ public class PlayerController : MonoBehaviour
     private Rigidbody2D rb;
     private Vector2 movement;
     private InputAction moveAction;
+    private SpriteRenderer spriteRenderer;
 
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
-        // Get the "Move" action from the project-wide actions asset
+        spriteRenderer = GetComponent<SpriteRenderer>();
         moveAction = InputSystem.actions.FindAction("Player/Move");
         moveAction.Enable();
+
+        // Set initial sorting order
+        if (spriteRenderer != null)
+            spriteRenderer.sortingOrder = Mathf.RoundToInt(-transform.position.y * 100);
     }
 
     void Update()
     {
-        // Read the movement vector from the input action
         movement = moveAction.ReadValue<Vector2>();
     }
 
